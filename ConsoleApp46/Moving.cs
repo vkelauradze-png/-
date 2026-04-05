@@ -324,6 +324,10 @@ namespace ConsoleApp46
                             newMap[i, j] = '.';
                             new Battle(hero, map, levelWorld);
                         }
+                        else if (newMap[newX, newY] == 'T')
+                        {
+                            return;
+                        }
                         _i = newX;
                         _j = newY;
                     }

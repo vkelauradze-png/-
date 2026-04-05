@@ -22,7 +22,11 @@ namespace ConsoleApp46
                     if (mas[i, j] == (char)1 || mas[i, j] == 'U')
                         return false;
                 }
-            mas[10, 10] = 'U';
+
+            // Исправлено: динамический центр
+            int centerX = mas.GetLength(0) / 2;
+            int centerY = mas.GetLength(1) / 2;
+            mas[centerX, centerY] = 'U';
             return true;
         }
 

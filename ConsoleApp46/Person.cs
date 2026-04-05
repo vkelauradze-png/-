@@ -159,7 +159,6 @@ namespace ConsoleApp46
         /// <returns>максимальное здоровье персонажа</returns>
         public int GetMaxHP()
         {
-            MaxHP = HP;
             return MaxHP;
         }
 
@@ -169,10 +168,14 @@ namespace ConsoleApp46
         /// <returns>текущее здоровье персонажа</returns>
         public int GetCurrentHP()
         {
-            HP = MaxHP;
             return HP;
         }
-
+        public void Heal(int amount)
+        {
+            HP += amount;
+            if (HP > MaxHP)
+                HP = MaxHP;
+        }
         /// <summary>
         /// вывод характеристик персонажа на консоль
         /// </summary>

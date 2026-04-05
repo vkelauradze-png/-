@@ -129,7 +129,7 @@ namespace ConsoleApp46
             ConsoleKeyInfo key;
             string errorMessage = string.Empty;
 
-            while (Hero.HP > 0)
+            while (true)
             {
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
@@ -139,7 +139,8 @@ namespace ConsoleApp46
 
                 key = Console.ReadKey();
                 Console.Clear();
-
+                if (key.Key == ConsoleKey.Enter)
+                    break;
                 try
                 {
                     ProcessKeyPress(key,Hero);
@@ -162,6 +163,8 @@ namespace ConsoleApp46
         {
             switch (CKI.Key)
             {
+                case ConsoleKey.Enter:
+                    return;
                 case ConsoleKey.NumPad1:
                     if (Hero.Coins > 250)
                     {
@@ -236,11 +239,7 @@ namespace ConsoleApp46
         public Heart(Person Hero, char[,] mas) : base(Hero)
         {
             Console.Clear();
-            Hero.IncreaseHP(10);
-            if (Hero.HP - 10 == Hero.MaxHP)
-                Hero.IncreaseMaxHP(10);
-            else if (Hero.HP > Hero.MaxHP)
-                Hero.GetMaxHP();
+            Hero.Heal(10);
         }
     }
 
