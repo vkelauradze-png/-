@@ -7,9 +7,9 @@ namespace ConsoleApp46
     /// <summary>
     /// класс, представляющий событие в игре
     /// </summary>
-    internal class Ivent
+    public class Ivent
     {
-        
+
         Person hero;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс для события битвы
     /// </summary>
-    internal class Battle : Ivent
+    public class Battle : Ivent
     {
         /// <summary>
         /// создает новый экземпляр класса Battle с заданным персонажем, массивом символов и уровнем мира
@@ -110,7 +110,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс события для кузницы
     /// </summary>
-    internal class Forge : Ivent
+    public class Forge : Ivent
     {
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace ConsoleApp46
                     break;
                 try
                 {
-                    ProcessKeyPress(key,Hero);
+                    ProcessKeyPress(key, Hero);
                     errorMessage = string.Empty;
                 }
                 catch (InvalidKeyException ex)
@@ -228,7 +228,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс события для здоровья
     /// </summary>
-    internal class Heart : Ivent
+    public class Heart : Ivent
     {
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс события для портала
     /// </summary>
-    internal class Portal : Ivent
+    public class Portal : Ivent
     {
 
         /// <summary>

@@ -6,7 +6,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс, представляющий выигрыш или поражение
     /// </summary>
-    abstract class WinORLose
+    public class WinORLose
     {
 
         /// <summary>

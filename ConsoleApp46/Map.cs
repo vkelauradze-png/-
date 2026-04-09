@@ -6,7 +6,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс отображения карты
     /// </summary>
-    internal class Map
+    public class Map
     {
 
         /// <summary>

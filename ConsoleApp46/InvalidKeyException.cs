@@ -6,7 +6,7 @@ namespace ConsoleApp46
     /// <summary>
     /// исключение, которое возникает при использовании недопустимого ключа
     /// </summary>
-    class InvalidKeyException : Exception
+    public class InvalidKeyException : Exception
     {
 
         /// <summary>

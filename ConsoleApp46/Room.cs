@@ -6,7 +6,7 @@ namespace ConsoleApp46
     /// <summary>
     /// класс комнаты
     /// </summary>
-    class Room
+    public class Room
     {
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace ConsoleApp46
                 if (v[1, 23] == ch)
                     break;
             }
-            if (p.HP <= 0) 
+            if (p.HP <= 0)
             {
                 Console.Clear();
                 WinORLose.Losei();

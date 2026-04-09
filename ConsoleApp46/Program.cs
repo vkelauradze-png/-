@@ -56,7 +56,7 @@ namespace ConsoleApp46
 
 
             string errorMessage = string.Empty;
-            while (p1.HP > 0 || p2.HP>0)
+            while (p1.HP > 0 || p2.HP > 0)
             {
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
@@ -111,7 +111,7 @@ namespace ConsoleApp46
                         Moving.Move(v, 3);
                     break;
                 case ConsoleKey.RightArrow:
-                    if (DrawMap(v, v2,p1, p2, '0', 1, 12, 13))
+                    if (DrawMap(v, v2, p1, p2, '0', 1, 12, 13))
                         Moving.Move(v, 4);
                     break;
                 case ConsoleKey.Spacebar:
@@ -134,11 +134,11 @@ namespace ConsoleApp46
                         Moving.Move(v2, 2);
                     break;
                 case ConsoleKey.A:
-                    if (DrawMap(v2, v, p2, p1, '8', 2, 12,11))
+                    if (DrawMap(v2, v, p2, p1, '8', 2, 12, 11))
                         Moving.Move(v2, 3);
                     break;
                 case ConsoleKey.D:
-                    if (DrawMap(v2, v, p2, p1, '8', 2, 12,13))
+                    if (DrawMap(v2, v, p2, p1, '8', 2, 12, 13))
                         Moving.Move(v2, 4);
                     break;
                 case ConsoleKey.Backspace:

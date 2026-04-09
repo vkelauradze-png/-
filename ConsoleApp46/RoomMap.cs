@@ -10,7 +10,7 @@ namespace ConsoleApp46
     /// <summary>
     /// представляет карту комнаты
     /// </summary>
-    internal class RoomMap
+    public class RoomMap
     {
 
         /// <summary>
