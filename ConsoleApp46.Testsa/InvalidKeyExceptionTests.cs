@@ -1,6 +1,4 @@
-﻿using Xunit;
-
-namespace ConsoleApp46.Tests;
+﻿namespace ConsoleApp46.Tests;
 
 public class InvalidKeyExceptionTests
 {
