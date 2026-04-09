@@ -8,14 +8,7 @@ namespace ConsoleApp46
     /// класс, представляющий программу игры
     /// </summary>
     public class Program
-    {   /// <summary>
-        /// сила игрока
-        /// </summary>
-        public int Strength { get; private set; } = 10;
-        public void UpgradeStrength()
-        {
-            Strength += 2;
-        }
+    {   
         /// <summary>
         /// имя игрока
         /// </summary>

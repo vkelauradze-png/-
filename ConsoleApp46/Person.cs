@@ -83,7 +83,14 @@ namespace ConsoleApp46
             DeliteEnemies = 0;
             Coins = 0;
         }
-
+        /// <summary>
+        /// сила игрока
+        /// </summary>
+        public int Strength { get; private set; } = 10;
+        public void UpgradeStrength()
+        {
+            Strength += 2;
+        }
         /// <summary>
         /// увеличивает уровень навыка "взрыва" бомбой
         /// </summary>
