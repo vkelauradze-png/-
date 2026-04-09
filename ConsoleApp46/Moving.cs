@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 
 namespace ConsoleApp46
@@ -30,7 +31,6 @@ namespace ConsoleApp46
                             if (i == (mas.GetLength(0) - 1) / 2 && j == (mas.GetLength(1) - 1) / 2)
                                 mas[i + 1, j] = '.';
                         }
-                        WinORLose.WinI(mas);
                     }
                     break;
 
@@ -46,7 +46,6 @@ namespace ConsoleApp46
                             if (i == (mas.GetLength(0) - 1) / 2 && j == (mas.GetLength(1) - 1) / 2)
                                 mas[i - 1, j] = '.';
                         }
-                        WinORLose.WinI(mas);
                     }
                     break;
 
@@ -61,7 +60,6 @@ namespace ConsoleApp46
                                 mas[i, j + 1] = '.';
                         }
                         mas[i, 0] = temp;
-                        WinORLose.WinI(mas);
                     }
                     break;
 
@@ -76,10 +74,10 @@ namespace ConsoleApp46
                                 mas[i, j - 1] = '.';
                         }
                         mas[i, mas.GetLength(1) - 1] = temp;
-                        WinORLose.WinI(mas);
                     }
                     break;
             }
+            WinORLose.WinI(mas);
         }
 
         /// <summary>
@@ -140,6 +138,20 @@ namespace ConsoleApp46
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// поддерживаем список врагов
+        /// </summary>
+        private static List<(int X, int Y)> enemies = new List<(int, int)>();
+
+        static public void UpdateEnemiesList(char[,] map, char ch)
+        {
+            enemies.Clear();
+            for (int i = 0; i < map.GetLength(0); i++)
+                for (int j = 0; j < map.GetLength(1); j++)
+                    if (map[i, j] == '@')
+                        enemies.Add((i, j));
         }
 
         /// <summary>
@@ -253,86 +265,64 @@ namespace ConsoleApp46
         /// <param name="_j">координата j игрока после перемещения</param>
         /// <param name="ch">символ игрока на карте</param>
         /// <param name="pnum">номер игрока</param>
-        static public void MovePerson(ref char[,] map, ConsoleKey key, Person hero, ref int levelWorld, ref int _i, ref int _j, char ch, int pnum)
+        static public void MovePerson(ref char[,] map, ConsoleKey key, Person hero,
+    ref int levelWorld, char ch, int pnum)
         {
             char[,] newMap = new char[map.GetLength(0), map.GetLength(1)];
-            int newX, newY;
-
             Array.Copy(map, newMap, map.Length);
 
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    if (map[i, j] == ch)
-                    {
-                        newX = i;
-                        newY = j;
-                        if (pnum == 1)
-                            switch (key)
-                            {
-                                case ConsoleKey.UpArrow:
-                                    newX = (i - 1 + map.GetLength(0)) % map.GetLength(0);
-                                    break;
-                                case ConsoleKey.DownArrow:
-                                    newX = (i + 1) % map.GetLength(0);
-                                    break;
-                                case ConsoleKey.LeftArrow:
-                                    newY = (j - 1 + map.GetLength(1)) % map.GetLength(1);
-                                    break;
-                                case ConsoleKey.RightArrow:
-                                    newY = (j + 1) % map.GetLength(1);
-                                    break;
-                                case ConsoleKey.Z:
-                                    DeliteEnemies(map);
-                                    break;
-                            }
-                        else if (pnum == 2)
-                            switch (key)
-                            {
-                                case ConsoleKey.W:
-                                    newX = (i - 1 + map.GetLength(0)) % map.GetLength(0);
-                                    break;
-                                case ConsoleKey.S:
-                                    newX = (i + 1) % map.GetLength(0);
-                                    break;
-                                case ConsoleKey.A:
-                                    newY = (j - 1 + map.GetLength(1)) % map.GetLength(1);
-                                    break;
-                                case ConsoleKey.D:
-                                    newY = (j + 1) % map.GetLength(1);
-                                    break;
-                                case ConsoleKey.E:
-                                    DeliteEnemies(map);
-                                    break;
-                            }
+            int oldX = hero.PosX;
+            int oldY = hero.PosY;
+            int newX = oldX;
+            int newY = oldY;
 
-                        if (newMap[newX, newY] == '.' || newMap[newX, newY] == 'E')
-                        {
-                            newMap[newX, newY] = map[i, j];
-                            newMap[i, j] = '.';
-                        }
-                        else if (newMap[newX, newY] == '$')
-                        {
-                            newMap[newX, newY] = map[i, j];
-                            newMap[i, j] = '.';
-                            hero.AddCoins(10);
-                        }
-                        else if (newMap[newX, newY] == '@')
-                        {
-                            newMap[newX, newY] = map[i, j];
-                            newMap[i, j] = '.';
-                            new Battle(hero, map, levelWorld);
-                        }
-                        else if (newMap[newX, newY] == 'T')
-                        {
-                            return;
-                        }
-                        _i = newX;
-                        _j = newY;
-                    }
+            if (pnum == 1)
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow: newX = (oldX - 1 + map.GetLength(0)) % map.GetLength(0); break;
+                    case ConsoleKey.DownArrow: newX = (oldX + 1) % map.GetLength(0); break;
+                    case ConsoleKey.LeftArrow: newY = (oldY - 1 + map.GetLength(1)) % map.GetLength(1); break;
+                    case ConsoleKey.RightArrow: newY = (oldY + 1) % map.GetLength(1); break;
+                    case ConsoleKey.Z: DeliteEnemies(map); return;
                 }
+            else if (pnum == 2)
+                switch (key)
+                {
+                    case ConsoleKey.W: newX = (oldX - 1 + map.GetLength(0)) % map.GetLength(0); break;
+                    case ConsoleKey.S: newX = (oldX + 1) % map.GetLength(0); break;
+                    case ConsoleKey.A: newY = (oldY - 1 + map.GetLength(1)) % map.GetLength(1); break;
+                    case ConsoleKey.D: newY = (oldY + 1) % map.GetLength(1); break;
+                    case ConsoleKey.E: DeliteEnemies(map); return;
+                }
+
+            if (newMap[newX, newY] == '.' || newMap[newX, newY] == 'E')
+            {
+                newMap[newX, newY] = map[oldX, oldY];
+                newMap[oldX, oldY] = '.';
+                hero.PosX = newX;
+                hero.PosY = newY;
             }
+            else if (newMap[newX, newY] == '$')
+            {
+                newMap[newX, newY] = map[oldX, oldY];
+                newMap[oldX, oldY] = '.';
+                hero.AddCoins(10);
+                hero.PosX = newX;
+                hero.PosY = newY;
+            }
+            else if (newMap[newX, newY] == '@')
+            {
+                newMap[newX, newY] = map[oldX, oldY];
+                newMap[oldX, oldY] = '.';
+                new Battle(hero, map, levelWorld);
+                hero.PosX = newX;
+                hero.PosY = newY;
+            }
+            else if (newMap[newX, newY] == 'T')
+            {
+                return;
+            }
+
             Array.Copy(newMap, map, map.Length);
         }
 
@@ -344,46 +334,40 @@ namespace ConsoleApp46
         /// <param name="_j">координата Y врага</param>
         /// <param name="hero">игрок</param>
         /// <param name="ch">символ игрока</param>
-        static public void MoveEnemy(ref char[,] map, int _i, int _j, Person hero, char ch)
+        static public void MoveEnemy(ref char[,] map, int playerX, int playerY, Person hero, char ch)
         {
             char[,] newMap = new char[map.GetLength(0), map.GetLength(1)];
             Array.Copy(map, newMap, map.Length);
 
-            for (int i = 0; i < map.GetLength(0); i++)
+            foreach (var enemy in enemies)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    if (map[i, j] == '@')
-                    {
-                        // Проверка: рядом ли игрок
-                        if (Math.Abs(_i - i) + Math.Abs(_j - j) == 1)
-                        {
-                            new Battle(hero, map, hero.levelWorld);
-                            newMap[i, j] = '.';
-                        }
-                        else
-                        {
-                            // Движение к игроку (простой BFS на один шаг)
-                            int newX = i, newY = j;
-                            if (Math.Abs(_i - i) > Math.Abs(_j - j))
-                            {
-                                newX += (_i > i) ? 1 : -1;
-                            }
-                            else
-                            {
-                                newY += (_j > j) ? 1 : -1;
-                            }
+                int i = enemy.X;
+                int j = enemy.Y;
 
-                            if (newX >= 0 && newX < map.GetLength(0) && newY >= 0 && newY < map.GetLength(1) && newMap[newX, newY] == '.')
-                            {
-                                newMap[newX, newY] = map[i, j];
-                                newMap[i, j] = '.';
-                            }
-                        }
+                if (Math.Abs(playerX - i) + Math.Abs(playerY - j) == 1)
+                {
+                    new Battle(hero, map, hero.levelWorld);
+                    newMap[i, j] = '.';
+                }
+                else
+                {
+                    int newX = i, newY = j;
+                    if (Math.Abs(playerX - i) > Math.Abs(playerY - j))
+                        newX += (playerX > i) ? 1 : -1;
+                    else
+                        newY += (playerY > j) ? 1 : -1;
+
+                    if (newX >= 0 && newX < map.GetLength(0) && newY >= 0 && newY < map.GetLength(1)
+                        && newMap[newX, newY] == '.')
+                    {
+                        newMap[newX, newY] = map[i, j];
+                        newMap[i, j] = '.';
                     }
                 }
             }
+
             Array.Copy(newMap, map, map.Length);
+            UpdateEnemiesList(map, ch); // обновляем список после движения
         }
     }
 }

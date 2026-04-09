@@ -92,6 +92,11 @@ namespace ConsoleApp46
             Strength += 2;
         }
         /// <summary>
+        /// позиция игрока
+        /// </summary>
+        public int PosX { get; set; }
+        public int PosY { get; set; }
+        /// <summary>
         /// увеличивает уровень навыка "взрыва" бомбой
         /// </summary>
         public void Boombm()
