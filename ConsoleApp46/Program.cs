@@ -8,8 +8,14 @@ namespace ConsoleApp46
     /// класс, представляющий программу игры
     /// </summary>
     public class Program
-    {
-
+    {   /// <summary>
+        /// сила игрока
+        /// </summary>
+        public int Strength { get; private set; } = 10;
+        public void UpgradeStrength()
+        {
+            Strength += 2;
+        }
         /// <summary>
         /// имя игрока
         /// </summary>
@@ -31,8 +37,8 @@ namespace ConsoleApp46
             Console.Write("введите никнейм второго игрока: ");
             b = Console.ReadLine();
 
-            Person p1 = new Person(10000, a);
-            Person p2 = new Person(10000, b);
+            Person p1 = new Person(100, a);
+            Person p2 = new Person(100, b);
 
             int def = 25;
 

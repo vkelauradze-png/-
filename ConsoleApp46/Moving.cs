@@ -355,34 +355,28 @@ namespace ConsoleApp46
                 {
                     if (map[i, j] == '@')
                     {
-                        int diffX = _i - i;
-                        int diffY = _j - j;
-
-                        if (newMap[i + 1, j] == ch || newMap[i - 1, j] == ch || newMap[i, j + 1] == ch || newMap[i, j - 1] == ch)
+                        // Проверка: рядом ли игрок
+                        if (Math.Abs(_i - i) + Math.Abs(_j - j) == 1)
                         {
                             new Battle(hero, map, hero.levelWorld);
                             newMap[i, j] = '.';
                         }
                         else
                         {
-                            if (diffX > 0 && newMap[i + 1, j] == '.')
+                            // Движение к игроку (простой BFS на один шаг)
+                            int newX = i, newY = j;
+                            if (Math.Abs(_i - i) > Math.Abs(_j - j))
                             {
-                                newMap[i + 1, j] = map[i, j];
-                                newMap[i, j] = '.';
+                                newX += (_i > i) ? 1 : -1;
                             }
-                            else if (diffX < 0 && newMap[i - 1, j] == '.')
+                            else
                             {
-                                newMap[i - 1, j] = map[i, j];
-                                newMap[i, j] = '.';
+                                newY += (_j > j) ? 1 : -1;
                             }
-                            else if (diffY > 0 && newMap[i, j + 1] == '.')
+
+                            if (newX >= 0 && newX < map.GetLength(0) && newY >= 0 && newY < map.GetLength(1) && newMap[newX, newY] == '.')
                             {
-                                newMap[i, j + 1] = map[i, j];
-                                newMap[i, j] = '.';
-                            }
-                            else if (diffY < 0 && newMap[i, j - 1] == '.')
-                            {
-                                newMap[i, j - 1] = map[i, j];
+                                newMap[newX, newY] = map[i, j];
                                 newMap[i, j] = '.';
                             }
                         }
