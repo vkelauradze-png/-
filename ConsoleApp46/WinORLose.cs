@@ -2,7 +2,6 @@
 
 namespace ConsoleApp46
 {
-
     /// <summary>
     /// класс, представляющий выигрыш или поражение
     /// </summary>
@@ -50,6 +49,23 @@ namespace ConsoleApp46
         static public void OnEnemyKilled()
         {
             hasEnemiesCache = true;
+        }
+
+        /// <summary>
+        /// обработка поражения игрока
+        /// </summary>
+        static public void Losei()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("========================================");
+            Console.WriteLine("              ПОРАЖЕНИЕ!                ");
+            Console.WriteLine("========================================");
+            Console.ResetColor();
+            Console.WriteLine("\nИгра окончена.");
+            Console.WriteLine("Нажмите любую клавишу для выхода...");
+            Console.ReadKey(true);
+            Environment.Exit(0);
         }
     }
 }

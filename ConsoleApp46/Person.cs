@@ -2,13 +2,11 @@
 
 namespace ConsoleApp46
 {
-
     /// <summary>
     /// класс, представляющий персонажа игры
     /// </summary>
     public class Person
     {
-
         /// <summary>
         /// уровень мира
         /// </summary>
@@ -18,20 +16,21 @@ namespace ConsoleApp46
         /// флаг указывающий, находится ли персонаж в комнате
         /// </summary>
         public bool InRoom = false;
-        /// <summary>
-        /// счетчик уровеня радиуса ломания деревьев
-        /// </summary>
-        public static int CountBreakTreesm = 1;
 
         /// <summary>
-        /// счетчик уровеня радиуса взрыва бомбы
+        /// счетчик уровня радиуса ломания деревьев (инстансный)
         /// </summary>
-        public static int CountBoombm = 1;
+        public int CountBreakTreesm = 1;
 
         /// <summary>
-        /// счетчик уровеня радиуса удаления врагов
+        /// счетчик уровня радиуса взрыва бомбы (инстансный)
         /// </summary>
-        public static int CountDeliteEnemiesm = 1;
+        public int CountBoombm = 1;
+
+        /// <summary>
+        /// счетчик уровня радиуса удаления врагов (инстансный)
+        /// </summary>
+        public int CountDeliteEnemiesm = 1;
 
         /// <summary>
         /// максимальное здоровье персонажа
@@ -83,25 +82,30 @@ namespace ConsoleApp46
             DeliteEnemies = 0;
             Coins = 0;
         }
+
         /// <summary>
         /// сила игрока
         /// </summary>
         public int Strength { get; private set; } = 10;
+
         public void UpgradeStrength()
         {
             Strength += 2;
         }
+
         /// <summary>
         /// позиция игрока
         /// </summary>
         public int PosX { get; set; }
         public int PosY { get; set; }
+
         /// <summary>
         /// увеличивает уровень навыка "взрыва" бомбой
         /// </summary>
         public void Boombm()
         {
-            CountBoombm++;
+            if (CountBoombm < 3)
+                CountBoombm++;
         }
 
         /// <summary>
@@ -109,7 +113,8 @@ namespace ConsoleApp46
         /// </summary>
         public void BreakTreesm()
         {
-            CountBreakTreesm++;
+            if (CountBreakTreesm < 3)
+                CountBreakTreesm++;
         }
 
         /// <summary>
@@ -117,7 +122,8 @@ namespace ConsoleApp46
         /// </summary>
         public void DeliteEnemiesm()
         {
-            CountDeliteEnemiesm++;
+            if (CountDeliteEnemiesm < 3)
+                CountDeliteEnemiesm++;
         }
 
         /// <summary>
@@ -182,28 +188,30 @@ namespace ConsoleApp46
         {
             return HP;
         }
+
         public void Heal(int amount)
         {
             HP += amount;
             if (HP > MaxHP)
                 HP = MaxHP;
         }
+
         /// <summary>
         /// вывод характеристик персонажа на консоль
         /// </summary>
         /// <param name="a">Номер позиции персонажа</param>
         public void GetCharacter(int a)
         {
+            Console.SetCursorPosition((a - 1) * 60, 25);
+            Console.WriteLine($"Имя героя = {NamePerson}                    ");
+            Console.SetCursorPosition((a - 1) * 60, 26);
+            Console.WriteLine($"Здоровье = {HP}/{MaxHP}                    ");
+            Console.SetCursorPosition((a - 1) * 60, 27);
+            Console.WriteLine($"Деняк = {Coins}                            ");
+            Console.SetCursorPosition((a - 1) * 60, 28);
+            Console.WriteLine($"Уровень мира = {levelWorld}                ");
             Console.SetCursorPosition((a - 1) * 60, 29);
-            Console.WriteLine($"Имя героя = {NamePerson}");
-            Console.SetCursorPosition((a - 1) * 60, 29);
-            Console.WriteLine($"Здоровье = {HP}");
-            Console.SetCursorPosition((a - 1) * 60, 29);
-            Console.WriteLine($"MAX Здоровье = {MaxHP}");
-            Console.SetCursorPosition((a - 1) * 60, 29);
-            Console.WriteLine($"Деняк = {Coins}");
-            Console.SetCursorPosition((a - 1) * 60, 29);
-            Console.WriteLine($"Уровень мира = {levelWorld}");
+            Console.WriteLine($"Улучшения: Бомба={CountBoombm} Деревья={CountBreakTreesm} Враги={CountDeliteEnemiesm}");
         }
     }
 }
